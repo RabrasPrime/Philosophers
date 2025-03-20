@@ -6,30 +6,30 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/20 15:10:41 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/20 15:23:26 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
 
-void print_status(t_philosopher *philo, char *message) {
+void	print_status(t_philosopher *philo, char *message) {
     pthread_mutex_lock(&philo->table->print_lock);
     printf("[%ld] Philosopher %d %s\n", get_time_in_ms(), philo->id, message);
     pthread_mutex_unlock(&philo->table->print_lock);
 }
 
-t_table *init_table(int argc, char **argv) {
+t_table	*init_table(int argc, char **argv) {
     if (argc < 5 || argc > 6) {
         printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
         return NULL;
     }
 
     t_table *table = malloc(sizeof(t_table));
-    table->num_philosophers = atoi(argv[1]);
+    table->num_philosophers = ft_atoi(argv[1]);
     table->time_to_die = atol(argv[2]);
     table->time_to_eat = atol(argv[3]);
     table->time_to_sleep = atol(argv[4]);
-    table->must_eat_count = (argc == 6) ? atoi(argv[5]) : -1;
+    table->must_eat_count = (argc == 6) ? ft_atoi(argv[5]) : -1;
     table->stop_simulation = 0;
 
     table->forks = malloc(sizeof(pthread_mutex_t) * table->num_philosophers);
@@ -48,7 +48,7 @@ t_table *init_table(int argc, char **argv) {
     return table;
 }
 
-void *philosopher_routine(void *arg) {
+void	*philosopher_routine(void *arg) {
     t_philosopher *philo = (t_philosopher *)arg;
 
     if (philo->id % 2 == 0) { 
@@ -65,7 +65,7 @@ void *philosopher_routine(void *arg) {
     return NULL;
 }
 
-void take_forks_and_eat(t_philosopher *philo) {
+void	take_forks_and_eat(t_philosopher *philo) {
     t_table *table = philo->table;
 
     if (philo->id % 2 == 0) { 
@@ -92,13 +92,13 @@ void take_forks_and_eat(t_philosopher *philo) {
     usleep(table->time_to_sleep * 1000);
 }
 
-long get_time_in_ms() {
+long	get_time_in_ms() {
     struct timeval tv;
     gettimeofday(&tv, NULL);
     return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
 
-void start_simulation(t_table *table) {
+void	start_simulation(t_table *table) {
     for (int i = 0; i < table->num_philosophers; i++) {
         pthread_create(&table->philosophers[i].thread, NULL, philosopher_routine, &table->philosophers[i]);
     }
