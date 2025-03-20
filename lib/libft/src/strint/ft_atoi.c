@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:19:51 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/07 11:06:44 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/20 14:33:09 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_atoi_preprocess(const char *nptr, int *sign)
 		i++;
 	}
 	if (!nptr[i] || !(nptr[i] >= '0' && nptr[i] <= '9'))
-		ft_error("Error");
+		ft_error("Error, invalid number");
 	return (i);
 }
 
@@ -42,11 +42,11 @@ int	ft_atoi_convert(const char *nptr, int i, int sign)
 		result = result * 10 + (nptr[i] - '0');
 		if ((sign == 1 && result > INT_MAX)
 			|| (sign == -1 && - result < INT_MIN))
-			ft_error("Error");
+			ft_error("Error, invalid number");
 		i++;
 	}
 	if (nptr[i] != '\0')
-		ft_error("Error");
+		ft_error("Error, invalid number");
 	return ((int)(sign * result));
 }
 
