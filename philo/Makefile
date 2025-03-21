@@ -6,7 +6,7 @@
 #    By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 14:10:16 by tjooris           #+#    #+#              #
-#    Updated: 2025/03/19 14:03:35 by tjooris          ###   ########.fr        #
+#    Updated: 2025/03/21 10:29:38 by tjooris          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,48 +28,17 @@ DEPS_BONUS        =   $(patsubst %.c, $(BUILD_DIR)%.d, $(SRC_BONUS))
 
 #=-=-=-=-=-=-ROOT-=-=-=-=-=#
 
-SRC =   main.c
-
-#=-=-=-=-=-=-HOOKS-=-=-=-=-=#
-
-SRC +=  $(addprefix $(HOOKS_DIR), $(HOOKS_SRC))
-
-HOOKS_DIR    =   hooks/
-HOOKS_SRC    =   hooks.c \
-
-#=-=-=-=-=-=-UTILS-=-=-=-=-=#
-
-SRC +=  $(addprefix $(UTILS_DIR), $(UTILS_SRC))
-
-UTILS_DIR    =   utils/
-UTILS_SRC    =   init.c \
-				math.c \
-				shift_zoom.c \
-				utils.c \
-
-#=-=-=-=-=-=-RENDER-=-=-=-=-=#
-
-SRC +=  $(addprefix $(RENDER_DIR), $(RENDER_SRC))
-
-RENDER_DIR    =   render/
-RENDER_SRC    =   render.c \
-
-#=-=-=-=-=-=-COLOR-=-=-=-=-=#
-
-SRC +=  $(addprefix $(COLOR_DIR), $(COLOR_SRC))
-
-COLOR_DIR    =   color/
-COLOR_SRC    =   color.c \
+SRC =   ft_philosophers.c
 
 #=-=-=-=-=-=-INCLUDES-=-=-=-=-=#
 
 LIB_DIR     =   lib/
-LIB_PATH    =   libft/libft.a minilibx/libmlx.a minilibx/libmlx_Linux.a
+LIB_PATH    =   libft/libft.a
 
 LIB_PATH    :=  $(addprefix $(LIB_DIR),$(LIB_PATH))
 LIB         =   $(patsubst lib%.a, %, $(notdir $(LIB_PATH)))
 
-SYS_LIB     =   -lmlx -lX11 -lXext -lm
+#SYS_LIB     =   -lmlx -lX11 -lXext -lm
 
 INC_DIR     =   include/
 INCLUDES    =   $(INC_DIR) \
