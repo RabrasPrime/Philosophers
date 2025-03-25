@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/25 13:58:05 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/25 14:43:11 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philosopher {
     int id;
     pthread_mutex_t * left_fork;
     pthread_mutex_t * right_fork;
+    int status;
     long last_meal_time;
     int meals_eaten;
     t_table *table;
@@ -57,5 +58,6 @@ void take_forks_and_eat(t_philosopher *philo);
 void print_status(t_philosopher *philo, char *message);
 long get_time_in_ms();
 void start_simulation(t_table *table);
+void	take_forks(t_philosopher *philo);
 
 #endif

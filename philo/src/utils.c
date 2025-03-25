@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/25 14:12:15 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/25 14:43:05 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_status(t_philosopher *philo, char *message)
 	pthread_mutex_unlock(&philo->table->print_lock);
 }
 
-int	take_forks_and_eat(t_philosopher *philo)
+void	take_forks(t_philosopher *philo)
 {
 	if (philo->id % 2 == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/25 14:12:40 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/25 14:43:24 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	take_forks_and_eat(t_philosopher *philo)
 {
 	t_table	*table = philo->table;
 
-	
+	take_forks(philo);
 	print_status(philo, "is eating 🍝");
 	philo->last_meal_time = get_time_in_ms();
 	philo->meals_eaten++;
