@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/21 12:02:20 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:58:05 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct s_table t_table;
 
 typedef struct s_philosopher {
     int id;
-    int left_fork;
-    int right_fork;
+    pthread_mutex_t * left_fork;
+    pthread_mutex_t * right_fork;
     long last_meal_time;
     int meals_eaten;
     t_table *table;
@@ -45,7 +45,7 @@ struct s_table {
     long time_to_sleep;
     int must_eat_count;
     int stop_simulation;
-    long start_time;           // Assure-toi que ce membre est bien présent
+    long start_time;
     pthread_mutex_t *forks;
     pthread_mutex_t print_lock;
     t_philosopher *philosophers;

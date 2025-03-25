@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/21 10:46:16 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/25 14:12:40 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ long	get_time_in_ms(void)
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
 }
 
-void	print_status(t_philosopher *philo, char *message)
-{
-	pthread_mutex_lock(&philo->table->print_lock);
-	printf("[%ld] Philosopher %d %s\n", get_time_in_ms() - philo->table->start_time, philo->id, message);
-	pthread_mutex_unlock(&philo->table->print_lock);
-}
-
 /* ************************************************************************** */
 /*                        FONCTIONS DE SIMULATION                             */
 /* ************************************************************************** */
@@ -39,22 +32,7 @@ void	take_forks_and_eat(t_philosopher *philo)
 {
 	t_table	*table = philo->table;
 
-	// Les philosophes pairs prennent d'abord leur fork gauche, puis droite.
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(&table->forks[philo->left_fork]);
-		print_status(philo, "has taken a fork 🍴 (left)");
-		pthread_mutex_lock(&table->forks[philo->right_fork]);
-		print_status(philo, "has taken a fork 🍴 (right)");
-	}
-	// Les philosophes impairs prennent d'abord leur fork droite, puis gauche.
-	else
-	{
-		pthread_mutex_lock(&table->forks[philo->right_fork]);
-		print_status(philo, "has taken a fork 🍴 (right)");
-		pthread_mutex_lock(&table->forks[philo->left_fork]);
-		print_status(philo, "has taken a fork 🍴 (left)");
-	}
+	
 	print_status(philo, "is eating 🍝");
 	philo->last_meal_time = get_time_in_ms();
 	philo->meals_eaten++;
