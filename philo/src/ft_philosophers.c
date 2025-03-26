@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/25 14:43:24 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/26 14:52:01 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,6 @@ void	*philosopher_routine(void *arg)
 	return (NULL);
 }
 
-/* ************************************************************************** */
-/*                        MONITEUR DE SIMULATION                              */
-/* ************************************************************************** */
-
 void	monitor_simulation(t_table *table)
 {
 	int	i;
@@ -78,18 +74,15 @@ void	monitor_simulation(t_table *table)
 		all_full = 1;
 		for (i = 0; i < table->num_philosophers; i++)
 		{
-			// Vérifier la condition de mort
 			if ((get_time_in_ms() - table->philosophers[i].last_meal_time) > table->time_to_die)
 			{
 				print_status(&table->philosophers[i], "died 💀");
 				table->stop_simulation = 1;
 				return ;
 			}
-			// Si le nombre de repas requis est défini, vérifier que chaque philosophe l'a atteint.
 			if (table->must_eat_count != -1 && table->philosophers[i].meals_eaten < table->must_eat_count)
 				all_full = 0;
 		}
-		// Si tous les philosophes ont mangé le nombre requis, on arrête la simulation.
 		if (table->must_eat_count != -1 && all_full)
 		{
 			table->stop_simulation = 1;
@@ -98,10 +91,6 @@ void	monitor_simulation(t_table *table)
 		usleep(1000);
 	}
 }
-
-/* ************************************************************************** */
-/*                        INITIALISATION ET LANCEMENT                         */
-/* ************************************************************************** */
 
 t_table	*init_table(int argc, char **argv)
 {
@@ -113,30 +102,6 @@ t_table	*init_table(int argc, char **argv)
 		printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (NULL);
 	}
-	table = malloc(sizeof(t_table));
-	table->num_philosophers = atoi(argv[1]);
-	table->time_to_die = atol(argv[2]);
-	table->time_to_eat = atol(argv[3]);
-	table->time_to_sleep = atol(argv[4]);
-	table->must_eat_count = (argc == 6) ? atoi(argv[5]) : -1;
-	table->stop_simulation = 0;
-	table->forks = malloc(sizeof(pthread_mutex_t) * table->num_philosophers);
-	table->philosophers = malloc(sizeof(t_philosopher) * table->num_philosophers);
-	pthread_mutex_init(&table->print_lock, NULL);
-	table->start_time = get_time_in_ms();
-	i = 0;
-	while (i < table->num_philosophers)
-	{
-		pthread_mutex_init(&table->forks[i], NULL);
-		table->philosophers[i].id = i;
-		table->philosophers[i].left_fork = i;
-		table->philosophers[i].right_fork = (i + 1) % table->num_philosophers;
-		table->philosophers[i].last_meal_time = get_time_in_ms();
-		table->philosophers[i].meals_eaten = 0;
-		table->philosophers[i].table = table;
-		i++;
-	}
-	return (table);
 }
 
 void	start_simulation(t_table *table)
@@ -157,10 +122,6 @@ void	start_simulation(t_table *table)
 		i++;
 	}
 }
-
-/* ************************************************************************** */
-/*                                 MAIN                                       */
-/* ************************************************************************** */
 
 int	main(int argc, char **argv)
 {

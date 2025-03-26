@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/25 14:43:05 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/26 15:09:30 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,20 @@ void	take_forks(t_philosopher *philo)
 		print_status(philo, "has taken a fork");
 		pthread_mutex_lock(philo->left_fork);
 		print_status(philo, "has taken a fork");
+	}
+}
+int	my_usleep(long time, t_table	*table)
+{
+	long i;
+
+	i = 0;
+	while (i < time)
+	{
+		usleep(1000);
+		pthread_mutex_lock(&table->status_simulation);
+		if (table->stop_simulation)
+			return (0);
+		pthread_mutex_unlock(&table->status_simulation);
+		i++;
 	}
 }

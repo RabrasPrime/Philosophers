@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/25 14:43:11 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/26 15:08:01 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ struct s_table {
     long start_time;
     pthread_mutex_t *forks;
     pthread_mutex_t print_lock;
+    pthread_mutex_t status_simulation;
     t_philosopher *philosophers;
 };
 
-// Fonctions principales
 void *philosopher_routine(void *arg);
 void take_forks_and_eat(t_philosopher *philo);
 void print_status(t_philosopher *philo, char *message);
