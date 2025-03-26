@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/26 14:52:01 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/26 15:19:27 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,16 @@ void	take_forks_and_eat(t_philosopher *philo)
 void	*philosopher_routine(void *arg)
 {
 	t_philosopher	*philo = (t_philosopher *)arg;
-
-	// Si le philosophe est pair, il commence par penser pour laisser le temps à un impair de manger.
 	if (philo->id % 2 == 0)
 	{
-		print_status(philo, "is thinking 💭");
+		print_status(philo, "is thinking");
 		usleep(philo->table->time_to_eat * 1000);
 	}
-	// Sinon, l'impair commence directement par manger.
 	else
 		take_forks_and_eat(philo);
 	while (!philo->table->stop_simulation)
 	{
-		print_status(philo, "is thinking 💭");
+		print_status(philo, "is thinking");
 		take_forks_and_eat(philo);
 	}
 	return (NULL);
