@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/26 15:19:27 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/27 15:54:23 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,6 @@ void	monitor_simulation(t_table *table)
 	}
 }
 
-t_table	*init_table(int argc, char **argv)
-{
-	t_table	*table;
-	int		i;
-
-	if (argc < 5 || argc > 6)
-	{
-		printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
-		return (NULL);
-	}
-}
-
 void	start_simulation(t_table *table)
 {
 	int	i;
@@ -125,19 +113,7 @@ int	main(int argc, char **argv)
 	t_table	*table;
 	int		i;
 
-	table = init_table(argc, argv);
+	table = init_table(argv[1], argv[2], argv[3], argv[4], argv[5]);
 	if (!table)
-		return (1);
-	start_simulation(table);
-	i = 0;
-	while (i < table->num_philosophers)
-	{
-		pthread_mutex_destroy(&table->forks[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&table->print_lock);
-	free(table->forks);
-	free(table->philosophers);
-	free(table);
-	return (0);
+		return (-1);
 }
