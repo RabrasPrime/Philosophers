@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/27 15:53:59 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/28 13:59:12 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void start_simulation(t_table *table);
 void	take_forks(t_philosopher *philo);
 void clear_table(t_table *table, int nb_philo);
 t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_sleep, int eat_count);
+int	my_usleep(t_table *table, time_t time);
 
 #endif

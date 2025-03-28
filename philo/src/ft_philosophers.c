@@ -6,15 +6,11 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/27 15:54:23 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/28 13:59:39 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
-
-/* ************************************************************************** */
-/*                          FONCTIONS UTILITAIRES                             */
-/* ************************************************************************** */
 
 long	get_time_in_ms(void)
 {
@@ -23,10 +19,6 @@ long	get_time_in_ms(void)
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
 }
-
-/* ************************************************************************** */
-/*                        FONCTIONS DE SIMULATION                             */
-/* ************************************************************************** */
 
 void	take_forks_and_eat(t_philosopher *philo)
 {
@@ -49,7 +41,7 @@ void	*philosopher_routine(void *arg)
 	if (philo->id % 2 == 0)
 	{
 		print_status(philo, "is thinking");
-		usleep(philo->table->time_to_eat * 1000);
+		my_usleep(philo->table->time_to_eat * 1000);
 	}
 	else
 		take_forks_and_eat(philo);
@@ -59,34 +51,6 @@ void	*philosopher_routine(void *arg)
 		take_forks_and_eat(philo);
 	}
 	return (NULL);
-}
-
-void	monitor_simulation(t_table *table)
-{
-	int	i;
-	int	all_full;
-
-	while (1)
-	{
-		all_full = 1;
-		for (i = 0; i < table->num_philosophers; i++)
-		{
-			if ((get_time_in_ms() - table->philosophers[i].last_meal_time) > table->time_to_die)
-			{
-				print_status(&table->philosophers[i], "died 💀");
-				table->stop_simulation = 1;
-				return ;
-			}
-			if (table->must_eat_count != -1 && table->philosophers[i].meals_eaten < table->must_eat_count)
-				all_full = 0;
-		}
-		if (table->must_eat_count != -1 && all_full)
-		{
-			table->stop_simulation = 1;
-			return ;
-		}
-		usleep(1000);
-	}
 }
 
 void	start_simulation(t_table *table)
