@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/28 13:59:39 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/28 14:27:23 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	take_forks_and_eat(t_philosopher *philo)
 	t_table	*table = philo->table;
 
 	take_forks(philo);
-	print_status(philo, "is eating 🍝");
+	print_status(philo, "is eating");
 	philo->last_meal_time = get_time_in_ms();
 	philo->meals_eaten++;
 	usleep(table->time_to_eat * 1000);
-	pthread_mutex_unlock(&table->forks[philo->right_fork]);
-	pthread_mutex_unlock(&table->forks[philo->left_fork]);
-	print_status(philo, "is sleeping 😴");
+	pthread_mutex_unlock(&philo->right_fork);
+	pthread_mutex_unlock(&philo->left_fork);
+	print_status(philo, "is sleeping");
 	usleep(table->time_to_sleep * 1000);
 }
 
@@ -63,7 +63,6 @@ void	start_simulation(t_table *table)
 		pthread_create(&table->philosophers[i].thread, NULL, philosopher_routine, &table->philosophers[i]);
 		i++;
 	}
-	monitor_simulation(table);
 	i = 0;
 	while (i < table->num_philosophers)
 	{
