@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/27 16:14:38 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/03/31 13:56:07 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int init_philosopher(t_table *table, int id, t_philosopher **philosopher)
     return (0);
 }
 
-long get_current_time_ms(void)
+time_t get_current_time_ms(void)
 {
     struct timeval tv;
 
@@ -99,4 +99,3 @@ t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_
     }
     return (table);
 }
-
