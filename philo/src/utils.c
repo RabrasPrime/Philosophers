@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/27 16:26:07 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/04/03 12:28:43 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,17 @@ int	my_usleep(t_table *table, time_t time)
 		pthread_mutex_unlock(&table->status_simulation);
 	}
 	return (1);
+}
+int my_atoi(char *str)
+{
+	int i;
+	int nb;
+
+	i = 0;
+	nb = 0;
+	while(str[i])
+	{
+		
+		i++;
+	}
 }

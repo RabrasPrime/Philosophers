@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/03/31 14:12:18 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/04/03 11:55:56 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void *philosopher_routine(void *arg);
 void take_forks_and_eat(t_philosopher *philo);
 void print_status(t_philosopher *philo, char *message);
 long get_time_in_ms();
-int start_simulation(t_table *table);
 void	take_forks(t_philosopher *philo);
 void clear_table(t_table *table, int nb_philo);
 t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_sleep, int eat_count);
