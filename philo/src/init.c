@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/04/01 14:44:01 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/04/04 14:02:16 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,21 @@ time_t get_current_time_ms(void)
         return (-1);
     return (tv.tv_sec * 1000L + tv.tv_usec / 1000);
 }
-static int init_forks(pthread_mutex_t **forks, int nb_philo)
+static int init_forks(t_fork **forks, int nb_philo)
 {
     int i;
 
-    *forks = malloc(sizeof(pthread_mutex_t) * nb_philo);
+    *forks = malloc(sizeof(t_fork) * nb_philo);
     if (!*forks)
         return (0);
     i = 0;
     while (i < nb_philo)
     {
-        if (pthread_mutex_init(&(*forks)[i], NULL) != 0)
+        (*forks)[i].status = FREE;
+        if (pthread_mutex_init(&(*forks)[i].fork, NULL) != 0)
         {
             while (--i >= 0)
-                pthread_mutex_destroy(&(*forks)[i]);
+                pthread_mutex_destroy(&(*forks)[i].fork);
             free(*forks);
             return (0);
         }
@@ -60,6 +61,7 @@ static int init_forks(pthread_mutex_t **forks, int nb_philo)
     }
     return (1);
 }
+
 
 static int init_mutexes(t_table *table)
 {

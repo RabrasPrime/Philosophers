@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/04/03 12:04:31 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/04/04 13:46:28 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	take_forks_and_eat(t_philosopher *philo)
 	philo->last_meal_time = get_time_in_ms();
 	philo->meals_eaten++;
 	usleep(table->time_to_eat * 1000);
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(&philo->right_fork->fork);
+	pthread_mutex_unlock(&philo->left_fork->fork);
 	print_status(philo, "is sleeping");
 	usleep(table->time_to_sleep * 1000);
 }
