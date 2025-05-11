@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/05/11 22:23:04 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/05/11 23:18:07 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	*philosopher_routine(void *arg)
 	{
 		if (!check_philo_died(philo))
 			return (NULL);
-		if (philo->status == THINK || philo->status == SLEEP)
+		if (philo->status == THINK)
 			print_status(philo, "is thinking");
 		if (check_philo_died(philo) || check_simulation_died(philo))
 			return (NULL);
