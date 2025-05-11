@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/05/11 22:27:40 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/05/11 22:28:53 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ int	my_usleep(t_table *table, time_t time)
 	}
 	return (1);
 }
-

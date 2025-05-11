@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:50:38 by tjooris           #+#    #+#             */
-/*   Updated: 2025/05/11 22:24:30 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/05/11 22:52:31 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void clear_table(t_table *table, int nb_philo)
 	i = 0;
         while (i < nb_philo)
         {
+			free(&table->philosophers[i]);
             pthread_mutex_destroy(&table->forks[i].fork);
             i++;
         }
