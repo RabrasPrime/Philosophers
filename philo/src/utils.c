@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/04/04 13:40:51 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/05/11 22:27:40 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	take_forks(t_philosopher *philo)
 }
 int	my_usleep(t_table *table, time_t time)
 {
-	time_t i;
+	time_t 	i;
 
 	i = get_time_in_ms() + time;
-	while (get_time_in_ms() < time)
+	while (get_time_in_ms() < i)
 	{
 		usleep(1000);
 		pthread_mutex_lock(&table->status_simulation);
@@ -55,15 +55,4 @@ int	my_usleep(t_table *table, time_t time)
 	}
 	return (1);
 }
-int my_atoi(char *str)
-{
-	int i;
-	int nb;
 
-	i = 0;
-	nb = 0;
-	while(str[i])
-	{
-		i++;
-	}
-}

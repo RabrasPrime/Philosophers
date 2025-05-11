@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/04/04 14:02:16 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/05/11 22:23:28 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_
 {
     t_table *table;
 
+	if (nb_philo < 0 || time_to_die < 0 || time_to_eat < 0 || time_to_sleep < 0 || eat_count == -1)
+		return (NULL);
     table = malloc(sizeof(t_table));
     if (!table)
         return (NULL);
@@ -97,7 +99,8 @@ t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_
         pthread_mutex_destroy(&table->status_simulation);
         pthread_mutex_destroy(&table->print_lock);
         free(table->forks);
-        return (free(table), NULL);
+		free(table);
+        return (NULL);
     }
     return (table);
 }
