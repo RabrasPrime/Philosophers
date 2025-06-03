@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/05/11 22:28:53 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/05/26 21:41:10 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,50 @@ void	print_status(t_philosopher *philo, char *message)
 	pthread_mutex_unlock(&philo->table->print_lock);
 }
 
+void	let_fork(t_philosopher *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(&philo->left_fork->fork);
+		philo->left_fork->status = FREE;
+		pthread_mutex_unlock(&philo->left_fork->fork);
+		pthread_mutex_lock(&philo->right_fork->fork);
+		philo->right_fork->status = FREE;
+		pthread_mutex_unlock(&philo->right_fork->fork);
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->right_fork->fork);
+		philo->right_fork->status = FREE;
+		pthread_mutex_unlock(&philo->right_fork->fork);
+		pthread_mutex_lock(&philo->left_fork->fork);
+		philo->left_fork->status = FREE;
+		pthread_mutex_unlock(&philo->left_fork->fork);
+	}	
+}
+
 void	take_forks(t_philosopher *philo)
 {
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&philo->left_fork->fork);
 		philo->left_fork->status = TAKEN;
+		pthread_mutex_unlock(&philo->left_fork->fork);
 		print_status(philo, "has taken a fork");
 		pthread_mutex_lock(&philo->right_fork->fork);
 		philo->right_fork->status = TAKEN;
+		pthread_mutex_unlock(&philo->right_fork->fork);
 		print_status(philo, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->right_fork->fork);
 		philo->right_fork->status = TAKEN;
+		pthread_mutex_unlock(&philo->right_fork->fork);
 		print_status(philo, "has taken a fork");
 		pthread_mutex_lock(&philo->left_fork->fork);
 		philo->left_fork->status = TAKEN;
+		pthread_mutex_unlock(&philo->left_fork->fork);
 		print_status(philo, "has taken a fork");
 	}
 }
