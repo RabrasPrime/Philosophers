@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosophers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/05/11 23:18:07 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:09:04 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,35 +67,78 @@ long	get_time_in_ms(void)
 	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
 }
 
-void	take_forks_and_eat(t_philosopher *philo)
+int	is_eating(t_philosopher *philo)
 {
 	t_table	*table = philo->table;
 
-	take_forks(philo);
 	print_status(philo, "is eating");
 	philo->last_meal_time = get_time_in_ms();
 	philo->meals_eaten++;
-	usleep(table->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->right_fork->fork);
-	pthread_mutex_unlock(&philo->left_fork->fork);
-	print_status(philo, "is sleeping");
-	usleep(table->time_to_sleep * 1000);
+	if (my_usleep(philo, table->time_to_eat * 1000))
+		return (1);
+	let_fork(philo);
+	return (0);
 }
 
-int check_philo_died(t_philosopher *philo)
+int	check_philo_status(t_philosopher *philo)
 {
-	if(philo->status == DEAD)
+	time_t	now;
+
+	now = get_current_time_ms();
+	if (now - philo->last_meal_time >= philo->table->time_to_die)
+		return (0);
+	return (1);
+}
+
+void	report_death(t_philosopher	*philo)
+{
+	t_table	*table;
+
+	table = philo->table;
+	print_status(philo, "died");
+	pthread_mutex_lock(&table->status_simulation);
+	table->stop_simulation = 1;
+	pthread_mutex_unlock(&table->status_simulation);
+}
+
+int	is_thinking(t_philosopher	*philo)
+{
+	t_table	*table;
+
+	print_status(philo, "is thinking");
+	table = philo->table;
+	while(take_fork(philo->left_fork))
 	{
-		print_status(philo, "died");
-		pthread_mutex_lock(&philo->table->status_simulation);
-		philo->table->stop_simulation = 1;
-		pthread_mutex_unlock(&philo->table->status_simulation);
+		if (!check_philo_status(philo))
+		{
+			report_death(philo->table);
+			return (1);
+		}
+	}
+	print_status(philo, "has taken a fork");
+	while(take_fork(philo->right_fork))
+	{
+		if (!check_philo_status(philo))
+		{
+			report_death(philo->table);
+			return (1);
+		}
+	}
+	print_status(philo, "has taken a fork");
+	return (0);
+}
+
+int	check_philo_died(t_philosopher	*philo)
+{
+	if (!check_philo_status(philo))
+	{
+		report_death(philo);
 		return (1);
 	}
-	return (0);	
+	return (0);
 }
 
-int check_simulation_died(t_philosopher *philo)
+int check_simulation_stop(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->table->status_simulation);
 	if (philo->table->stop_simulation == 1)
@@ -113,22 +156,12 @@ void	*philosopher_routine(void *arg)
 	
 	if (philo->table->must_eat_count == 0)
 		return (NULL);
-	if (philo->id % 2 == 0)
-	{
-		print_status(philo, "is thinking");
-		my_usleep(philo->table ,philo->table->time_to_eat * 1000);
-	}
-	else
-		take_forks_and_eat(philo);
 	while (!philo->table->stop_simulation)
 	{
-		if (!check_philo_died(philo))
+		if (is_thinking(philo))
 			return (NULL);
-		if (philo->status == THINK)
-			print_status(philo, "is thinking");
-		if (check_philo_died(philo) || check_simulation_died(philo))
+		if (is_eating(philo))
 			return (NULL);
-		take_forks_and_eat(philo);
 	}
 	return (NULL);
 }

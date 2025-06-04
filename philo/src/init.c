@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/05/11 22:52:50 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:30:53 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int init_philosopher(t_table *table, int id, t_philosopher **philosopher)
     (*philosopher)->table = table;
     (*philosopher)->meals_eaten = 0;
     (*philosopher)->last_meal_time = table->start_time;
+    (*philosopher)->time_to_die = table->time_to_die;
 	if (id % 2 == 0)
     	(*philosopher)->status = EAT;
 	else
@@ -31,14 +32,7 @@ int init_philosopher(t_table *table, int id, t_philosopher **philosopher)
     return (0);
 }
 
-time_t get_current_time_ms(void)
-{
-    struct timeval tv;
 
-    if (gettimeofday(&tv, NULL) != 0)
-        return (-1);
-    return (tv.tv_sec * 1000L + tv.tv_usec / 1000);
-}
 static int init_forks(t_fork **forks, int nb_philo)
 {
     int i;

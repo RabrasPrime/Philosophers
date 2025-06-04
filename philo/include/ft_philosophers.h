@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosophers.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/04/04 13:37:13 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:58:08 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_philosopher {
     t_fork *right_fork;
     int status;
     time_t last_meal_time;
+    time_t  time_to_die;
     int meals_eaten;
     t_table *table;
     pthread_t thread;
@@ -69,10 +70,15 @@ struct s_table {
 void *philosopher_routine(void *arg);
 void take_forks_and_eat(t_philosopher *philo);
 void print_status(t_philosopher *philo, char *message);
-long get_time_in_ms();
+time_t get_current_time_ms(void);
 void	take_forks(t_philosopher *philo);
 void clear_table(t_table *table, int nb_philo);
 t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_sleep, int eat_count);
 int	my_usleep(t_table *table, time_t time);
+void	let_fork(t_philosopher *philo);
+int	is_fork_taken(t_fork *fork);
+int	take_fork(t_fork *fork);
+int	check_philo_status(t_philosopher *philo);
+int check_simulation_stop(t_philosopher *philo)e
 
 #endif
