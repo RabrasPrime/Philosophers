@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/18 16:15:52 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:32:00 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	is_eating(t_philosopher *philo)
 {
 	t_table	*table = philo->table;
 
+	if (check_simulation_stop(philo))
+		return (1);
 	print_status(philo, "is eating");
 	philo->last_meal_time = get_time_in_ms();
 	philo->meals_eaten++;
@@ -85,9 +87,9 @@ int	is_sleeping(t_philosopher *philo)
 {
 	t_table	*table = philo->table;
 
+	if (check_simulation_stop(philo))
+		return (1);
 	print_status(philo, "is sleeping");
-	philo->last_meal_time = get_time_in_ms();
-	philo->meals_eaten++;
 	if (my_usleep(philo, table->time_to_sleep * 1000))
 		return (1);
 	return (0);
@@ -108,7 +110,8 @@ void	report_death(t_philosopher	*philo)
 	t_table	*table;
 
 	table = philo->table;
-	print_status(philo, "died");
+	if (check_simulation_stop(philo))
+		print_status(philo, "died");
 	pthread_mutex_lock(&table->status_simulation);
 	table->stop_simulation = 1;
 	pthread_mutex_unlock(&table->status_simulation);
@@ -118,6 +121,8 @@ int	is_thinking(t_philosopher	*philo)
 {
 	t_table	*table;
 
+	if (check_simulation_stop(philo))
+		return (1);
 	print_status(philo, "is thinking");
 	table = philo->table;
 	while(take_fork(philo->left_fork))
