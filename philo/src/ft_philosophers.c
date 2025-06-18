@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/18 15:45:30 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:15:52 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,5 +220,5 @@ int	main(int argc, char **argv)
 	if (!table)
 		return (-1);
 	start_simulation(table);
-	clear_table(table, table->num_philosophers);
+	//clear_table(table, table->num_philosophers);
 }
