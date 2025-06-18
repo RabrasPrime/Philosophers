@@ -6,32 +6,56 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/04 13:30:53 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/18 15:29:35 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
 
-int init_philosopher(t_table *table, int id, t_philosopher **philosopher)
+// int init_philosopher(t_table *table, int id, t_philosopher **philosopher)
+// {
+//     *philosopher = malloc(sizeof(t_philosopher));
+//     if (!*philosopher)
+//         return (id);
+//     (*philosopher)->id = id;
+//     (*philosopher)->table = table;
+//     (*philosopher)->meals_eaten = 0;
+//     (*philosopher)->last_meal_time = table->start_time;
+//     (*philosopher)->time_to_die = table->time_to_die;
+// 	if (id % 2 == 0)
+//     	(*philosopher)->status = EAT;
+// 	else
+// 		(*philosopher)->status = THINK;
+// 	(*philosopher)->status = 0;
+//     (*philosopher)->left_fork = &table->forks[id];
+//     (*philosopher)->right_fork = &table->forks[(id + 1) % table->num_philosophers];
+//     return (0);
+// }
+
+void init_philosopher(t_table *table, int id, t_philosopher *philo)
 {
-    *philosopher = malloc(sizeof(t_philosopher));
-    if (!*philosopher)
-        return (id);
-    (*philosopher)->id = id;
-    (*philosopher)->table = table;
-    (*philosopher)->meals_eaten = 0;
-    (*philosopher)->last_meal_time = table->start_time;
-    (*philosopher)->time_to_die = table->time_to_die;
-	if (id % 2 == 0)
-    	(*philosopher)->status = EAT;
-	else
-		(*philosopher)->status = THINK;
-	(*philosopher)->status = 0;
-    (*philosopher)->left_fork = &table->forks[id];
-    (*philosopher)->right_fork = &table->forks[(id + 1) % table->num_philosophers];
-    return (0);
+    philo->id = id;
+    philo->table = table;
+    philo->meals_eaten = 0;
+    philo->last_meal_time = table->start_time;
+    philo->time_to_die = table->time_to_die;
+    philo->left_fork = &table->forks[id];
+    philo->right_fork = &table->forks[(id + 1) % table->num_philosophers];
+    if (id % 2 == 0)
+        philo->status = EAT;
+    else
+        philo->status = THINK;
 }
 
+void init_philosophers(t_table *table)
+{
+    int i = 0;
+    while (i < table->num_philosophers)
+    {
+        init_philosopher(table, i, &table->philosophers[i]);
+        i++;
+    }
+}
 
 static int init_forks(t_fork **forks, int nb_philo)
 {
@@ -96,5 +120,6 @@ t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_
 		free(table);
         return (NULL);
     }
+    init_philosophers(table);
     return (table);
 }

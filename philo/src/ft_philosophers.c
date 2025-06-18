@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/18 13:17:30 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:29:21 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_number(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] < '0' && str[i] > '9')
+		if (str[i] < '0' || str[i] > '9')
 			return (0);
 		i++;
 	}
@@ -31,9 +31,10 @@ int	check_arguments(int size, char **tab)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (i < size)
 	{
+
 		if (!is_number(tab[i]))
 			return (0);
 		i++;
@@ -163,7 +164,7 @@ void	*philosopher_routine(void *arg)
 	
 	if (philo->table->must_eat_count == 0)
 		return (NULL);
-	while (!philo->table->stop_simulation)
+	while (!check_simulation_stop(philo))
 	{
 		if (is_thinking(philo))
 			return (NULL);
@@ -201,12 +202,12 @@ int	main(int argc, char **argv)
 {
 	t_table	*table;
 
-	if (argc < 4 || argc > 5)
+	if (argc < 5 || argc > 6)
 	{
 		printf("error: wrong number of argument\n");
 		exit(EXIT_FAILURE);
 	}
-	if (!check_arguments(argc, &argv[1]))
+	if (!check_arguments(argc, argv))
 	{
 		printf("error: wrong type of arguments\n");
 		exit(EXIT_FAILURE);
