@@ -6,31 +6,11 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/18 15:34:48 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/18 15:40:29 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
-
-// int init_philosopher(t_table *table, int id, t_philosopher **philosopher)
-// {
-//     *philosopher = malloc(sizeof(t_philosopher));
-//     if (!*philosopher)
-//         return (id);
-//     (*philosopher)->id = id;
-//     (*philosopher)->table = table;
-//     (*philosopher)->meals_eaten = 0;
-//     (*philosopher)->last_meal_time = table->start_time;
-//     (*philosopher)->time_to_die = table->time_to_die;
-// 	if (id % 2 == 0)
-//     	(*philosopher)->status = EAT;
-// 	else
-// 		(*philosopher)->status = THINK;
-// 	(*philosopher)->status = 0;
-//     (*philosopher)->left_fork = &table->forks[id];
-//     (*philosopher)->right_fork = &table->forks[(id + 1) % table->num_philosophers];
-//     return (0);
-// }
 
 void init_philosopher(t_table *table, int id, t_philosopher *philo)
 {

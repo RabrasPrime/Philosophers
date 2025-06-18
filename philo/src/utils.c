@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/04 15:00:10 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:04:32 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,6 @@ void	let_fork(t_philosopher *philo)
 	}	
 }
 
-int	is_fork_taken(t_fork *fork)
-{
-	pthread_mutex_lock(&fork->fork);
-	if (fork->status == TAKEN)
-	{
-		pthread_mutex_unlock(&fork->fork);
-		return (1);
-	}
-	pthread_mutex_unlock(&fork->fork);
-	return (0);
-	
-}
-
 int	take_fork(t_fork *fork)
 {
 	int	i;
@@ -66,29 +53,6 @@ int	take_fork(t_fork *fork)
 		fork->status = TAKEN;
 	pthread_mutex_unlock(&fork->fork);
 	return (i);
-}
-
-void	take_forks(t_philosopher *philo)
-{
-	if (philo->id % 2 == 0)
-	{
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(&philo->right_fork->fork);
-		philo->right_fork->status = TAKEN;
-		pthread_mutex_unlock(&philo->right_fork->fork);
-		print_status(philo, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(&philo->right_fork->fork);
-		philo->right_fork->status = TAKEN;
-		pthread_mutex_unlock(&philo->right_fork->fork);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(&philo->left_fork->fork);
-		philo->left_fork->status = TAKEN;
-		pthread_mutex_unlock(&philo->left_fork->fork);
-		print_status(philo, "has taken a fork");
-	}
 }
 
 time_t get_current_time_ms(void)
@@ -115,4 +79,3 @@ int	my_usleep(t_philosopher *philo, time_t time)
 	}
 	return (1);
 }
-
