@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/04 15:09:04 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/18 13:17:30 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,19 @@ int	is_eating(t_philosopher *philo)
 	return (0);
 }
 
+int	is_sleeping(t_philosopher *philo)
+{
+	t_table	*table = philo->table;
+
+	print_status(philo, "is sleeping");
+	print_status(philo, "is eating");
+	philo->last_meal_time = get_time_in_ms();
+	philo->meals_eaten++;
+	if (my_usleep(philo, table->time_to_sleep * 1000))
+		return (1);
+	return (0);
+}
+
 int	check_philo_status(t_philosopher *philo)
 {
 	time_t	now;
@@ -109,20 +122,14 @@ int	is_thinking(t_philosopher	*philo)
 	table = philo->table;
 	while(take_fork(philo->left_fork))
 	{
-		if (!check_philo_status(philo))
-		{
-			report_death(philo->table);
+		if (check_philo_died(philo))
 			return (1);
-		}
 	}
 	print_status(philo, "has taken a fork");
 	while(take_fork(philo->right_fork))
 	{
-		if (!check_philo_status(philo))
-		{
-			report_death(philo->table);
+		if (check_philo_died(philo))
 			return (1);
-		}
 	}
 	print_status(philo, "has taken a fork");
 	return (0);
@@ -162,6 +169,8 @@ void	*philosopher_routine(void *arg)
 			return (NULL);
 		if (is_eating(philo))
 			return (NULL);
+		if (is_sleeping(philo))
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -194,12 +203,12 @@ int	main(int argc, char **argv)
 
 	if (argc < 4 || argc > 5)
 	{
-		ft_printf("error: wrong number of argument\n");
+		printf("error: wrong number of argument\n");
 		exit(EXIT_FAILURE);
 	}
 	if (!check_arguments(argc, &argv[1]))
 	{
-		ft_printf("error: wrong type of arguments\n");
+		printf("error: wrong type of arguments\n");
 		exit(EXIT_FAILURE);
 	}
 	if (argc == 5)

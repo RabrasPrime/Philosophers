@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+         #
+#    By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 14:10:16 by tjooris           #+#    #+#              #
-#    Updated: 2025/04/03 11:45:20 by tjooris          ###   ########.fr        #
+#    Updated: 2025/06/18 13:07:35 by tjooris          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRC =   ft_philosophers.c \
 #=-=-=-=-=-=-INCLUDES-=-=-=-=-=#
 
 LIB_DIR     =   lib/
-LIB_PATH    =   libft/libft.a
+LIB_PATH    =   
 
 LIB_PATH    :=  $(addprefix $(LIB_DIR),$(LIB_PATH))
 LIB         =   $(patsubst lib%.a, %, $(notdir $(LIB_PATH)))

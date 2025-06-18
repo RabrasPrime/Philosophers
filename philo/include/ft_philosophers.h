@@ -6,18 +6,20 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/04 14:58:08 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/18 13:13:54 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PHILOSOPHERS_H
 # define FT_PHILOSOPHERS_H
 
-#include "libft.h"
-#include <pthread.h>
-#include "ft_printf.h"
-#include <stdlib.h>
-#include <sys/time.h>
+
+# include <pthread.h>
+
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <sys/time.h>
 
 enum	t_state
 {
@@ -74,11 +76,12 @@ time_t get_current_time_ms(void);
 void	take_forks(t_philosopher *philo);
 void clear_table(t_table *table, int nb_philo);
 t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_sleep, int eat_count);
-int	my_usleep(t_table *table, time_t time);
+int	my_usleep(t_philosopher *philo, time_t time);
 void	let_fork(t_philosopher *philo);
 int	is_fork_taken(t_fork *fork);
 int	take_fork(t_fork *fork);
 int	check_philo_status(t_philosopher *philo);
-int check_simulation_stop(t_philosopher *philo)e
+int	check_philo_died(t_philosopher	*philo);
+int check_simulation_stop(t_philosopher *philo);
 
 #endif
