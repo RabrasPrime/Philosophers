@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/19 16:25:43 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:31:22 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,11 @@ void	*philosopher_routine(void *arg)
 			return (NULL);
 		if (is_thinking(philo))
 			return (NULL);
+		if (check_philo_died(philo) || check_simulation_stop(philo))
+			return (NULL);
 		if (is_eating(philo))
+			return (NULL);
+		if (check_philo_died(philo) || check_simulation_stop(philo))
 			return (NULL);
 		if (is_sleeping(philo))
 			return (NULL);
