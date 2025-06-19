@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/18 16:13:31 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/19 15:22:55 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_status(t_philosopher *philo, char *message)
 {
 	pthread_mutex_lock(&philo->table->print_lock);
-	printf("[%ld] Philosopher %d %s\n", get_current_time_ms() - philo->table->start_time, philo->id, message);
+	printf("[%lld] Philosopher %d %s\n", get_current_time_ms() - philo->table->start_time, philo->id, message);
 	pthread_mutex_unlock(&philo->table->print_lock);
 }
 
@@ -55,13 +55,13 @@ int	take_fork(t_fork *fork)
 	return (i);
 }
 
-time_t get_current_time_ms(void)
+long long get_current_time_ms(void)
 {
     struct timeval tv;
 
     if (gettimeofday(&tv, NULL) != 0)
         return (-1);
-    return (tv.tv_sec * 1000L + tv.tv_usec / 1000);
+    return ((long long)tv.tv_sec * 1000LL + (long long)(tv.tv_usec / 1000));
 }
 
 int	my_usleep(t_philosopher *philo, time_t time)
