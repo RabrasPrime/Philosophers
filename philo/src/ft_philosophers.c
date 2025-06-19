@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/19 15:56:35 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:25:43 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	is_eating(t_philosopher *philo)
 		return (1);
 	print_status(philo, "is eating");
 	philo->last_meal_time = get_time_in_ms();
-	philo->meals_eaten++;
 	if (my_usleep(philo, table->time_to_eat * 1000))
 		return (1);
 	let_fork(philo);
@@ -110,8 +109,6 @@ void	report_death(t_philosopher	*philo)
 	t_table	*table;
 
 	table = philo->table;
-	//printf("res = %d and id= %d\n\n", table->stop_simulation, philo->id);
-	// printf("addresse table = %p\n\n\n", table);
 	if (!check_simulation_stop(philo))
 		print_status(philo, "died");
 	pthread_mutex_lock(&table->status_simulation);
@@ -133,14 +130,14 @@ int	is_thinking(t_philosopher *philo)
 		{
 			if (check_philo_died(philo))
 				return (1);
-			usleep(1000);
+			//usleep(1000);
 		}
 		print_status(philo, "has taken a fork");
 		while (take_fork(philo->left_fork))
 		{
 			if (check_philo_died(philo))
 				return (1);
-			usleep(1000);
+			//usleep(1000);
 		}
 		print_status(philo, "has taken a fork");
 	}
@@ -150,14 +147,14 @@ int	is_thinking(t_philosopher *philo)
 		{
 			if (check_philo_died(philo))
 				return (1);
-			usleep(1000);
+			//usleep(1000);
 		}
 		print_status(philo, "has taken a fork");
 		while (take_fork(philo->right_fork))
 		{
 			if (check_philo_died(philo))
 				return (1);
-			usleep(1000);
+			//usleep(1000);
 		}
 		print_status(philo, "has taken a fork");
 	}
@@ -197,6 +194,8 @@ void	*philosopher_routine(void *arg)
 		return (NULL);
 	while (!check_simulation_stop(philo))
 	{
+		if (check_philo_died(philo) || check_simulation_stop(philo))
+			return (NULL);
 		if (is_thinking(philo))
 			return (NULL);
 		if (is_eating(philo))
