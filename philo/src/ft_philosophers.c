@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/19 15:40:20 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/19 15:56:35 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ void	report_death(t_philosopher	*philo)
 	t_table	*table;
 
 	table = philo->table;
-	printf("res = %d and id= %d\n\n", table->stop_simulation, philo->id);
-	printf("addresse table = %p\n\n\n", table);
-	if (check_simulation_stop(philo))
+	//printf("res = %d and id= %d\n\n", table->stop_simulation, philo->id);
+	// printf("addresse table = %p\n\n\n", table);
+	if (!check_simulation_stop(philo))
 		print_status(philo, "died");
 	pthread_mutex_lock(&table->status_simulation);
 	table->stop_simulation = 1;
@@ -125,7 +125,6 @@ int	is_thinking(t_philosopher *philo)
 
 	if (check_simulation_stop(philo))
 		return (1);
-	usleep(100);
 	print_status(philo, "is thinking");
 	table = philo->table;
 	if (philo->id % 2 == 0)
@@ -134,12 +133,14 @@ int	is_thinking(t_philosopher *philo)
 		{
 			if (check_philo_died(philo))
 				return (1);
+			usleep(1000);
 		}
 		print_status(philo, "has taken a fork");
 		while (take_fork(philo->left_fork))
 		{
 			if (check_philo_died(philo))
 				return (1);
+			usleep(1000);
 		}
 		print_status(philo, "has taken a fork");
 	}
@@ -149,12 +150,14 @@ int	is_thinking(t_philosopher *philo)
 		{
 			if (check_philo_died(philo))
 				return (1);
+			usleep(1000);
 		}
 		print_status(philo, "has taken a fork");
 		while (take_fork(philo->right_fork))
 		{
 			if (check_philo_died(philo))
 				return (1);
+			usleep(1000);
 		}
 		print_status(philo, "has taken a fork");
 	}
@@ -245,7 +248,7 @@ int	main(int argc, char **argv)
 		table = init_table(ft_atoi_philo(argv[1]), ft_atoi_philo(argv[2]), ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]), ft_atoi_philo(argv[5]));
 	else
 		table = init_table(ft_atoi_philo(argv[1]), ft_atoi_philo(argv[2]), ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]), -2);
-	printf("addresse table = %p\n\n\n", &table);
+	//printf("addresse table = %p\n\n\n", &table);
 	if (!table)
 		return (-1);
 	start_simulation(table);
