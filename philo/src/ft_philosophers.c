@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/20 15:27:02 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/20 16:36:53 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	is_eating(t_philosopher *philo)
 		return (1);
 	print_status(philo, "is eating");
 	philo->last_meal_time = get_time_in_ms();
+	philo->meals_eaten++;
 	if (!my_usleep(philo, table->time_to_eat))
 		return (1);
 	let_fork(philo);
