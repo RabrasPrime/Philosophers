@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/20 16:36:53 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/20 16:45:08 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ int	is_thinking(t_philosopher *philo)
 	{
 		if (check_philo_died(philo))
 			return (1);
-		usleep(100);
 	}
 	print_status(philo, "has taken a fork");
 	print_status(philo, "has taken a fork");
@@ -169,15 +168,9 @@ void	*philosopher_routine(void *arg)
 		return (NULL);
 	while (!check_simulation_stop(philo))
 	{
-		if (check_philo_died(philo) || check_simulation_stop(philo))
-			return (NULL);
 		if (is_thinking(philo))
 			continue;
-		if (check_philo_died(philo) || check_simulation_stop(philo))
-			return (NULL);
 		if (is_eating(philo))
-			return (NULL);
-		if (check_philo_died(philo) || check_simulation_stop(philo))
 			return (NULL);
 		if (is_sleeping(philo))
 			continue;
