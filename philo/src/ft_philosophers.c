@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/19 16:31:22 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/20 14:53:27 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ int	is_eating(t_philosopher *philo)
 		return (1);
 	print_status(philo, "is eating");
 	philo->last_meal_time = get_time_in_ms();
-	if (my_usleep(philo, table->time_to_eat * 1000))
+	if (!my_usleep(philo, table->time_to_eat))
 		return (1);
+	print_status(philo, "sdfgsdgsdfhsdfdsgfds");
 	let_fork(philo);
 	return (0);
 }
@@ -89,7 +90,7 @@ int	is_sleeping(t_philosopher *philo)
 	if (check_simulation_stop(philo))
 		return (1);
 	print_status(philo, "is sleeping");
-	if (my_usleep(philo, table->time_to_sleep * 1000))
+	if (my_usleep(philo, table->time_to_sleep))
 		return (1);
 	return (0);
 }
@@ -109,9 +110,9 @@ void	report_death(t_philosopher	*philo)
 	t_table	*table;
 
 	table = philo->table;
-	if (!check_simulation_stop(philo))
-		print_status(philo, "died");
 	pthread_mutex_lock(&table->status_simulation);
+	if (table->stop_simulation == 0)
+		print_status(philo, "died");
 	table->stop_simulation = 1;
 	pthread_mutex_unlock(&table->status_simulation);
 }
@@ -124,40 +125,14 @@ int	is_thinking(t_philosopher *philo)
 		return (1);
 	print_status(philo, "is thinking");
 	table = philo->table;
-	if (philo->id % 2 == 0)
+	while (take_forks(philo->left_fork, philo->right_fork))
 	{
-		while (take_fork(philo->right_fork))
-		{
-			if (check_philo_died(philo))
-				return (1);
-			//usleep(1000);
-		}
-		print_status(philo, "has taken a fork");
-		while (take_fork(philo->left_fork))
-		{
-			if (check_philo_died(philo))
-				return (1);
-			//usleep(1000);
-		}
-		print_status(philo, "has taken a fork");
+		if (check_philo_died(philo))
+			return (1);
+		usleep(100);
 	}
-	else
-	{
-		while (take_fork(philo->left_fork))
-		{
-			if (check_philo_died(philo))
-				return (1);
-			//usleep(1000);
-		}
-		print_status(philo, "has taken a fork");
-		while (take_fork(philo->right_fork))
-		{
-			if (check_philo_died(philo))
-				return (1);
-			//usleep(1000);
-		}
-		print_status(philo, "has taken a fork");
-	}
+	print_status(philo, "has taken a fork");
+	print_status(philo, "has taken a fork");
 	return (0);
 }
 
@@ -197,7 +172,7 @@ void	*philosopher_routine(void *arg)
 		if (check_philo_died(philo) || check_simulation_stop(philo))
 			return (NULL);
 		if (is_thinking(philo))
-			return (NULL);
+			continue;
 		if (check_philo_died(philo) || check_simulation_stop(philo))
 			return (NULL);
 		if (is_eating(philo))
@@ -205,7 +180,7 @@ void	*philosopher_routine(void *arg)
 		if (check_philo_died(philo) || check_simulation_stop(philo))
 			return (NULL);
 		if (is_sleeping(philo))
-			return (NULL);
+			continue;
 	}
 	return (NULL);
 }
