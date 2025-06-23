@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/20 14:50:30 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/23 17:31:25 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,13 @@ struct s_table {
     t_fork *forks;
     pthread_mutex_t print_lock;
     pthread_mutex_t status_simulation;
+    pthread_mutex_t init;
     t_philosopher *philosophers;
 };
 
 void *philosopher_routine(void *arg);
 void take_forks_and_eat(t_philosopher *philo);
-void print_status(t_philosopher *philo, char *message);
+int print_status(t_philosopher *philo, char *message);
 long long get_current_time_ms(void);
 void clear_table(t_table *table, int nb_philo);
 t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_sleep, int eat_count);
@@ -83,5 +84,11 @@ int	check_philo_status(t_philosopher *philo);
 int	check_philo_died(t_philosopher	*philo);
 int check_simulation_stop(t_philosopher *philo);
 int	take_forks(t_fork *left_fork, t_fork *right_fork);
+int	is_eating(t_philosopher *philo);
+int	is_sleeping(t_philosopher *philo);
+int	is_thinking(t_philosopher *philo);
+int	check_arguments(int size, char **tab);
+int	is_number(char *str);
+int	ft_atoi_philo(char *number);
 
 #endif

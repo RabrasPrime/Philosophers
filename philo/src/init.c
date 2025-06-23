@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/19 15:35:59 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/23 17:33:17 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ static int init_mutexes(t_table *table)
     if (pthread_mutex_init(&table->status_simulation, NULL) != 0)
     {
         pthread_mutex_destroy(&table->print_lock);
+        return (0);
+    }
+    if (pthread_mutex_init(&table->init, NULL) != 0)
+    {
+        pthread_mutex_destroy(&table->print_lock);
+        pthread_mutex_destroy(&table->status_simulation);
         return (0);
     }
     return (1);

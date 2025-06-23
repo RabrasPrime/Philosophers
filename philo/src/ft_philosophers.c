@@ -6,159 +6,12 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/20 16:45:08 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/23 17:35:47 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
 #include <limits.h>
-
-int	is_number(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	check_arguments(int size, char **tab)
-{
-	int	i;
-
-	i = 1;
-	while (i < size)
-	{
-
-		if (!is_number(tab[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	ft_atoi_philo(char *number)
-{
-	long long	nb;
-	int			i;
-
-	i = 0;
-	nb = 0;
-	while (number[i])
-	{
-		
-		nb = (nb * 10) + (number[i] - '0'); 
-		i++;
-		if (nb < 0)
-			return (-1);
-	}
-	return (nb);
-}
-
-long	get_time_in_ms(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
-}
-
-int	is_eating(t_philosopher *philo)
-{
-	t_table	*table = philo->table;
-
-	if (check_simulation_stop(philo))
-		return (1);
-	print_status(philo, "is eating");
-	philo->last_meal_time = get_time_in_ms();
-	philo->meals_eaten++;
-	if (!my_usleep(philo, table->time_to_eat))
-		return (1);
-	let_fork(philo);
-	return (0);
-}
-
-int	is_sleeping(t_philosopher *philo)
-{
-	t_table	*table = philo->table;
-
-	if (check_simulation_stop(philo))
-		return (1);
-	print_status(philo, "is sleeping");
-	if (my_usleep(philo, table->time_to_sleep))
-		return (1);
-	return (0);
-}
-
-int	check_philo_status(t_philosopher *philo)
-{
-	time_t	now;
-
-	now = get_current_time_ms();
-	if (now - philo->last_meal_time >= philo->table->time_to_die)
-		return (0);
-	return (1);
-}
-
-void	report_death(t_philosopher	*philo)
-{
-	t_table	*table;
-
-	table = philo->table;
-	pthread_mutex_lock(&table->status_simulation);
-	if (table->stop_simulation == 0)
-		print_status(philo, "died");
-	table->stop_simulation = 1;
-	pthread_mutex_unlock(&table->status_simulation);
-}
-
-int	is_thinking(t_philosopher *philo)
-{
-	t_table	*table;
-
-	if (check_simulation_stop(philo))
-		return (1);
-	print_status(philo, "is thinking");
-	table = philo->table;
-	while (take_forks(philo->left_fork, philo->right_fork))
-	{
-		if (check_philo_died(philo))
-			return (1);
-	}
-	print_status(philo, "has taken a fork");
-	print_status(philo, "has taken a fork");
-	return (0);
-}
-
-
-int	check_philo_died(t_philosopher	*philo)
-{
-	if (check_simulation_stop(philo))
-		return (1);
-	if (!check_philo_status(philo))
-	{
-		report_death(philo);
-		return (1);
-	}
-	return (0);
-}
-
-int check_simulation_stop(t_philosopher *philo)
-{
-	pthread_mutex_lock(&philo->table->status_simulation);
-	if (philo->table->stop_simulation == 1)
-	{
-		pthread_mutex_unlock(&philo->table->status_simulation);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->table->status_simulation);
-	return (0);
-}
 
 void	*philosopher_routine(void *arg)
 {
@@ -166,6 +19,10 @@ void	*philosopher_routine(void *arg)
 	
 	if (philo->table->must_eat_count == 0)
 		return (NULL);
+	pthread_mutex_lock(&philo->table->init);
+	pthread_mutex_unlock(&philo->table->init);
+	if (philo->id % 2 == 1)
+		usleep(philo->table->time_to_sleep * 1000);
 	while (!check_simulation_stop(philo))
 	{
 		if (is_thinking(philo))
@@ -174,6 +31,7 @@ void	*philosopher_routine(void *arg)
 			return (NULL);
 		if (is_sleeping(philo))
 			continue;
+		//usleep(1000);
 	}
 	return (NULL);
 }
@@ -182,14 +40,26 @@ static int	start_simulation(t_table *table)
 {
 	int	i;
 
-	table->start_time = get_time_in_ms();
 	i = 0;
+	pthread_mutex_lock(&table->init);
 	while (i < table->num_philosophers)
 	{
 		table->philosophers[i].last_meal_time = table->start_time;
 		if (pthread_create(&table->philosophers[i].thread, NULL, philosopher_routine, &table->philosophers[i]))
 			return(0);
 		i++;
+	}
+	table->start_time = get_current_time_ms();
+	pthread_mutex_unlock(&table->init);
+	while(1)
+	{
+		pthread_mutex_lock(&table->status_simulation);
+		if (table->stop_simulation == 1)
+		{
+			pthread_mutex_unlock(&table->status_simulation);
+			break;
+		}
+		pthread_mutex_unlock(&table->status_simulation);
 	}
 	i = 0;
 	while (i < table->num_philosophers)
@@ -219,7 +89,6 @@ int	main(int argc, char **argv)
 		table = init_table(ft_atoi_philo(argv[1]), ft_atoi_philo(argv[2]), ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]), ft_atoi_philo(argv[5]));
 	else
 		table = init_table(ft_atoi_philo(argv[1]), ft_atoi_philo(argv[2]), ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]), -2);
-	//printf("addresse table = %p\n\n\n", &table);
 	if (!table)
 		return (-1);
 	start_simulation(table);

@@ -6,7 +6,7 @@
 #    By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 14:10:16 by tjooris           #+#    #+#              #
-#    Updated: 2025/06/18 13:07:35 by tjooris          ###   ########.fr        #
+#    Updated: 2025/06/23 13:43:23 by tjooris          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,36 @@ SRC =   ft_philosophers.c \
 		clear.c \
 		init.c \
 		utils.c \
+
+#=-=-=-=-=-=-ACTION-=-=-=-=-=#
+
+SRC +=  $(addprefix $(ACTION_DIR), $(ACTION_SRC))
+
+ACTION_DIR    =   action/
+ACTION_SRC    =   is_eating.c \
+				  is_thinking.c \
+				  is_sleeping.c \
+
+#=-=-=-=-=-=-DYING-=-=-=-=-=#
+
+SRC +=  $(addprefix $(DYING_DIR), $(DYING_SRC))
+
+DYING_DIR    =   dying/
+DYING_SRC    =   is_dead.c \
+
+#=-=-=-=-=-=-FORK-=-=-=-=-=#
+
+SRC +=  $(addprefix $(FORK_DIR), $(FORK_SRC))
+
+FORK_DIR    =   fork/
+FORK_SRC    =   fork.c \
+
+#=-=-=-=-=-=-PARSING-=-=-=-=-=#
+
+SRC +=  $(addprefix $(PARSING_DIR), $(PARSING_SRC))
+
+PARSING_DIR    =   parsing/
+PARSING_SRC    =   pars.c \
 
 #=-=-=-=-=-=-INCLUDES-=-=-=-=-=#
 
