@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:30:18 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 16:37:25 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:21:46 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,23 @@ int	is_thinking(t_philosopher *philo)
 {
 	if (check_simulation_stop(philo))
 		return (1);
-	print_status(philo, "is thinking");
-	usleep(500);
+	print_status(philo);
 	while (take_fork(philo->left_fork))
 	{
 		if (check_philo_died(philo))
 			return (1);
-		//usleep(200);
+        usleep(100);
 	}
 	while (take_fork(philo->right_fork))
 	{
 		if (check_philo_died(philo))
 			return (1);
-		//usleep(200);
+		usleep(100);
 	}
-
-	if (check_philo_died(philo))
-		return (1);
-	print_status(philo, "has taken a fork");
-	print_status(philo, "has taken a fork");
+    if (check_philo_died(philo))
+      return (1);
+    philo->status = TAKEN_FORKS;
+	print_status(philo);
+    philo->status = EAT;
 	return (0);
 }

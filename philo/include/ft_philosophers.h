@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 17:31:25 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:04:12 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ enum	t_state
 	EAT,
 	THINK,
 	DEAD,
+    TAKEN_FORKS
 };
 
 enum    t_status_fork
@@ -61,6 +62,7 @@ struct s_table {
     long long time_to_eat;
     long long time_to_sleep;
     int must_eat_count;
+    int have_eaten;
     int stop_simulation;
     long long start_time;
     t_fork *forks;
@@ -72,7 +74,7 @@ struct s_table {
 
 void *philosopher_routine(void *arg);
 void take_forks_and_eat(t_philosopher *philo);
-int print_status(t_philosopher *philo, char *message);
+int print_status(t_philosopher *philo);
 long long get_current_time_ms(void);
 void clear_table(t_table *table, int nb_philo);
 t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_sleep, int eat_count);

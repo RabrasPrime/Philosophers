@@ -6,11 +6,20 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:29:24 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 15:12:26 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:19:13 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
+
+void	check_quotta_eaten(t_philosopher *philo)
+{
+  	t_table	*table;
+
+    table = philo->table;
+	if (philo->meals_eaten == table->must_eat_count)
+          table->have_eaten += 1;
+}
 
 int	is_eating(t_philosopher *philo)
 {
@@ -18,11 +27,13 @@ int	is_eating(t_philosopher *philo)
 
 	if (check_philo_died(philo))
 		return (1);
-	print_status(philo, "is eating");
+	print_status(philo);
 	philo->last_meal_time = get_current_time_ms();
 	philo->meals_eaten++;
 	if (!my_usleep(philo, table->time_to_eat))
 		return (1);
+    check_quotta_eaten(philo);
 	let_fork(philo);
+    philo->status = SLEEP;
 	return (0);
 }

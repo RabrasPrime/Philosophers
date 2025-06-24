@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:30:57 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 15:12:32 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:25:35 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	is_sleeping(t_philosopher *philo)
 
 	if (check_philo_died(philo))
 		return (1);
-	print_status(philo, "is sleeping");
+    if (check_philo_died(philo))
+      return (1);
+	print_status(philo);
+	philo->status = THINK;
 	if (my_usleep(philo, table->time_to_sleep))
 		return (1);
 	return (0);

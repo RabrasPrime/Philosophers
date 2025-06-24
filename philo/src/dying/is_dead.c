@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:31:48 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 15:07:13 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/24 14:00:57 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	report_death(t_philosopher	*philo)
 
 	table = philo->table;
 	pthread_mutex_lock(&table->status_simulation);
+    philo->status = DEAD;
 	if (table->stop_simulation == 0)
-		print_status(philo, "died");
+		print_status(philo);
 	table->stop_simulation = 1;
 	pthread_mutex_unlock(&table->status_simulation);
 }

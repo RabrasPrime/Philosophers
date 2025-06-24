@@ -6,12 +6,30 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 17:35:47 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:30:42 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
 #include <limits.h>
+
+int	everyone_ate(t_philosopher *philo)
+{
+	t_table	*table;
+
+    table = philo->table;
+	if (table->must_eat_count == -2)
+          return (0);
+    if (table->must_eat_count == table->have_eaten)
+    {
+      	pthread_mutex_lock(&table->status_simulation);
+      	table->stop_simulation = 1;
+      	pthread_mutex_unlock(&table->status_simulation);
+    	return (1);
+    }
+    else
+    	return (0);
+}
 
 void	*philosopher_routine(void *arg)
 {
@@ -21,17 +39,19 @@ void	*philosopher_routine(void *arg)
 		return (NULL);
 	pthread_mutex_lock(&philo->table->init);
 	pthread_mutex_unlock(&philo->table->init);
+    philo->status = THINK;
 	if (philo->id % 2 == 1)
 		usleep(philo->table->time_to_sleep * 1000);
-	while (!check_simulation_stop(philo))
+	while (!everyone_ate(philo))
 	{
-		if (is_thinking(philo))
-			continue;
-		if (is_eating(philo))
-			return (NULL);
-		if (is_sleeping(philo))
-			continue;
-		//usleep(1000);
+        if (check_philo_died(philo))
+          	break ;
+        if (philo->status == THINK)
+        	is_thinking(philo);
+        else if (philo->status == EAT)
+        	is_eating(philo);
+        else if (philo->status == SLEEP)
+        	is_sleeping(philo);
 	}
 	return (NULL);
 }
@@ -60,6 +80,7 @@ static int	start_simulation(t_table *table)
 			break;
 		}
 		pthread_mutex_unlock(&table->status_simulation);
+        usleep(1000);
 	}
 	i = 0;
 	while (i < table->num_philosophers)

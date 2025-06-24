@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 16:45:16 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:45:08 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,46 @@ int	ft_atoi_philo(char *number)
 	return (nb);
 }
 
-int	print_status(t_philosopher *philo, char *message)
+int	print_status(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->table->print_lock);
-	printf("%lld %d %s\n", get_current_time_ms() - philo->table->start_time, philo->id, message);
+    if (philo->status == DEAD)
+		printf("\033[31m%lld %d died\033[0m\n", get_current_time_ms() - philo->table->start_time, philo->id);
+    else if (philo->status == EAT)
+    	printf("\033[33m%lld %d is eating\033[0m\n", get_current_time_ms() - philo->table->start_time, philo->id);
+    else if (philo->status == THINK)
+    	printf("\033[36m%lld %d is thinking\033[0m\n", get_current_time_ms() - philo->table->start_time, philo->id);
+    else if (philo->status == SLEEP)
+    	printf("\033[35m%lld %d is sleeping\033[0m\n", get_current_time_ms() - philo->table->start_time, philo->id);
+    else
+    {
+    	printf("\033[34m%lld %d has taken a fork\033[0m\n", get_current_time_ms() - philo->table->start_time, philo->id);
+    	printf("\033[34m%lld %d has taken a fork\033[0m\n", get_current_time_ms() - philo->table->start_time, philo->id);
+    }
 	pthread_mutex_unlock(&philo->table->print_lock);
 	return (1);
 }
-
+/*
+int	print_status(t_philosopher *philo)
+{
+	pthread_mutex_lock(&philo->table->print_lock);
+	if (philo->status == DEAD)
+		printf("%lld %d died\n", get_current_time_ms() - philo->table->start_time, philo->id);
+	else if (philo->status == EAT)
+		printf("%lld %d is eating\n", get_current_time_ms() - philo->table->start_time, philo->id);
+	else if (philo->status == THINK)
+		printf("%lld %d is thinking\n", get_current_time_ms() - philo->table->start_time, philo->id);
+	else if (philo->status == SLEEP)
+		printf("%lld %d is sleeping\n", get_current_time_ms() - philo->table->start_time, philo->id);
+	else
+	{
+		printf("%lld %d has taken a fork\n", get_current_time_ms() - philo->table->start_time, philo->id);
+		printf("%lld %d has taken a fork\n", get_current_time_ms() - philo->table->start_time, philo->id);
+	}
+	pthread_mutex_unlock(&philo->table->print_lock);
+	return (1);
+}
+*/
 long long get_current_time_ms(void)
 {
     struct timeval tv;
@@ -49,17 +81,14 @@ long long get_current_time_ms(void)
 
 int	my_usleep(t_philosopher *philo, long long time)
 {
-	long long	i;
-	t_table	*table;
+	long long	end;
 
-	i = 0;
-	table = philo->table;
-	while (i < time)
+	end = get_current_time_ms() + time;
+	while (get_current_time_ms() < end)
 	{
 		if (check_philo_died(philo))
 			return (0);
-		usleep(1000);
-		i++;
+		usleep(200);
 	}
 	return (1);
 }

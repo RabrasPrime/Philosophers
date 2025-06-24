@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 17:33:17 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/24 15:04:27 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_
     table->time_to_eat = time_to_eat;
     table->time_to_sleep = time_to_sleep;
     table->must_eat_count = eat_count;
+    table->have_eaten = 0;
     table->stop_simulation = 0;
     table->start_time = get_current_time_ms();
     if (!init_forks(&table->forks, nb_philo) || !init_mutexes(table))
