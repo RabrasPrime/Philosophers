@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosophers.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/24 15:04:12 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 08:33:50 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_philosopher {
     int status;
     long long last_meal_time;
     long long  time_to_die;
+	long long time_to_eat;
+    long long time_to_sleep;
     int meals_eaten;
     t_table *table;
     pthread_t thread;

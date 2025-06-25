@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosophers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/24 15:53:37 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 08:38:43 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@ void	*philosopher_routine(void *arg)
 	return (NULL);
 }
 
+static void wait_simulation_end(t_table *table)
+{
+	while(1)
+	{
+		pthread_mutex_lock(&table->status_simulation);
+		if (table->stop_simulation == 1)
+		{
+			pthread_mutex_unlock(&table->status_simulation);
+			break;
+		}
+		pthread_mutex_unlock(&table->status_simulation);
+        usleep(1000);
+	}
+}
 static int	start_simulation(t_table *table)
 {
 	int	i;
@@ -71,17 +85,7 @@ static int	start_simulation(t_table *table)
 	}
 	table->start_time = get_current_time_ms();
 	pthread_mutex_unlock(&table->init);
-	while(1)
-	{
-		pthread_mutex_lock(&table->status_simulation);
-		if (table->stop_simulation == 1)
-		{
-			pthread_mutex_unlock(&table->status_simulation);
-			break;
-		}
-		pthread_mutex_unlock(&table->status_simulation);
-        usleep(1000);
-	}
+	wait_simulation_end(table);
 	i = 0;
 	while (i < table->num_philosophers)
 	{

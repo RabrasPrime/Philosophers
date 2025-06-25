@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_eating.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:29:24 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/24 15:19:13 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 08:35:58 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ void	check_quotta_eaten(t_philosopher *philo)
 
 int	is_eating(t_philosopher *philo)
 {
-	t_table	*table = philo->table;
 
 	if (check_philo_died(philo))
 		return (1);
 	print_status(philo);
 	philo->last_meal_time = get_current_time_ms();
 	philo->meals_eaten++;
-	if (!my_usleep(philo, table->time_to_eat))
+	if (!my_usleep(philo, philo->time_to_eat))
 		return (1);
     check_quotta_eaten(philo);
 	let_fork(philo);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/24 15:04:27 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 08:36:29 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ void init_philosopher(t_table *table, int id, t_philosopher *philo)
     philo->meals_eaten = 0;
     philo->last_meal_time = table->start_time;
     philo->time_to_die = table->time_to_die;
+	philo->time_to_eat = table->time_to_eat;
+	philo->time_to_sleep = table->time_to_sleep;
     philo->left_fork = &table->forks[id];
     philo->right_fork = &table->forks[(id + 1) % table->num_philosophers];
-    if (id % 2 == 0)
-        philo->status = EAT;
-    else
-        philo->status = THINK;
+    philo->status = THINK;
 }
 
 void init_philosophers(t_table *table)
