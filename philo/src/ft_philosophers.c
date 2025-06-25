@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_philosophers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/25 08:38:43 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 13:47:18 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,23 @@ int	everyone_ate(t_philosopher *philo)
 	t_table	*table;
 
     table = philo->table;
+	pthread_mutex_lock(&table->status_simulation);
 	if (table->must_eat_count == -2)
+	{
+		pthread_mutex_unlock(&table->status_simulation);
           return (0);
-    if (table->must_eat_count == table->have_eaten)
+	}
+    if (table->have_eaten == table->num_philosophers)
     {
-      	pthread_mutex_lock(&table->status_simulation);
       	table->stop_simulation = 1;
       	pthread_mutex_unlock(&table->status_simulation);
     	return (1);
     }
     else
+	{
+		pthread_mutex_unlock(&table->status_simulation);
     	return (0);
+	}
 }
 
 void	*philosopher_routine(void *arg)
@@ -41,7 +47,7 @@ void	*philosopher_routine(void *arg)
 	pthread_mutex_unlock(&philo->table->init);
     philo->status = THINK;
 	if (philo->id % 2 == 1)
-		usleep(philo->table->time_to_sleep * 1000);
+		my_usleep(philo, philo->time_to_eat);
 	while (!everyone_ate(philo))
 	{
         if (check_philo_died(philo))
@@ -117,4 +123,5 @@ int	main(int argc, char **argv)
 	if (!table)
 		return (-1);
 	start_simulation(table);
+	clear_table(table);
 }

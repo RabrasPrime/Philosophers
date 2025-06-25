@@ -6,21 +6,36 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:33:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/24 12:57:49 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:07:05 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
 
-void	let_fork(t_philosopher *philo)
+void let_fork(t_philosopher *philo)
 {
-		pthread_mutex_lock(&philo->left_fork->fork);
-		pthread_mutex_lock(&philo->right_fork->fork);
-		philo->left_fork->status = FREE;
-		philo->right_fork->status = FREE;
-		pthread_mutex_unlock(&philo->left_fork->fork);
-		pthread_mutex_unlock(&philo->right_fork->fork);
+    t_fork *first;
+    t_fork *second;
+
+    if (philo->left_fork < philo->right_fork)
+    {
+        first = philo->left_fork;
+        second = philo->right_fork;
+    }
+    else
+    {
+        first = philo->right_fork;
+        second = philo->left_fork;
+    }
+    pthread_mutex_lock(&first->fork);
+    pthread_mutex_lock(&second->fork);
+
+    first->status = FREE;
+    second->status = FREE;
+    pthread_mutex_unlock(&second->fork);
+    pthread_mutex_unlock(&first->fork);
 }
+
 
 int take_forks(t_fork *left_fork, t_fork *right_fork)
 {

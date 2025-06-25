@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:31:48 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/24 14:00:57 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 11:15:23 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_philo_status(t_philosopher *philo)
 	time_t	now;
 
 	now = get_current_time_ms();
-	if (now - philo->last_meal_time >= philo->table->time_to_die)
+	if (now - philo->last_meal_time >= philo->time_to_die)
 		return (0);
 	return (1);
 }

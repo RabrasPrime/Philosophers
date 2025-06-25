@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_eating.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:29:24 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/25 08:35:58 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:08:22 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	check_quotta_eaten(t_philosopher *philo)
   	t_table	*table;
 
     table = philo->table;
+	pthread_mutex_lock(&table->status_simulation);
 	if (philo->meals_eaten == table->must_eat_count)
           table->have_eaten += 1;
+	pthread_mutex_unlock(&table->status_simulation);
 }
 
 int	is_eating(t_philosopher *philo)

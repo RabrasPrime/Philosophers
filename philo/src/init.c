@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/25 08:36:29 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 11:14:45 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ void init_philosopher(t_table *table, int id, t_philosopher *philo)
     philo->table = table;
     philo->meals_eaten = 0;
     philo->last_meal_time = table->start_time;
-    philo->time_to_die = table->time_to_die;
-	philo->time_to_eat = table->time_to_eat;
-	philo->time_to_sleep = table->time_to_sleep;
     philo->left_fork = &table->forks[id];
     philo->right_fork = &table->forks[(id + 1) % table->num_philosophers];
     philo->status = THINK;
 }
 
-void init_philosophers(t_table *table)
+void init_philosophers(t_table *table, int time_to_die, int time_to_eat, int time_to_sleep)
 {
     int i = 0;
     while (i < table->num_philosophers)
     {
         init_philosopher(table, i, &table->philosophers[i]);
+        table->philosophers[i].time_to_die = time_to_die;
+        table->philosophers[i].time_to_eat = time_to_eat;
+        table->philosophers[i].time_to_sleep = time_to_sleep;
         i++;
     }
 }
@@ -88,9 +88,6 @@ t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_
     if (!table)
         return (NULL);
     table->num_philosophers = nb_philo;
-    table->time_to_die = time_to_die;
-    table->time_to_eat = time_to_eat;
-    table->time_to_sleep = time_to_sleep;
     table->must_eat_count = eat_count;
     table->have_eaten = 0;
     table->stop_simulation = 0;
@@ -106,6 +103,6 @@ t_table *init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_
 		free(table);
         return (NULL);
     }
-    init_philosophers(table);
+    init_philosophers(table, time_to_die, time_to_eat, time_to_sleep);
     return (table);
 }
