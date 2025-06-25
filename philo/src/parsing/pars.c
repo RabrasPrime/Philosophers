@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:35:03 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/23 13:35:29 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/25 16:43:07 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	check_arguments(int size, char **tab)
 	i = 1;
 	while (i < size)
 	{
-
 		if (!is_number(tab[i]))
 			return (0);
 		i++;
