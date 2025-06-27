@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 14:15:45 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:21:05 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_table	*init_table(int nb_philo, int eat_count)
 {
 	t_table	*table;
 
-	if (nb_philo < 0 || eat_count == -1)
+	if (nb_philo <= 0 || eat_count == -1)
 		return (NULL);
 	table = malloc(sizeof(t_table));
 	if (!table)
