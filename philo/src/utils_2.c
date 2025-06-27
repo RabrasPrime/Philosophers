@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_thinking.c                                      :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/23 13:30:18 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 14:09:28 by tjooris          ###   ########.fr       */
+/*   Created: 2025/06/27 13:58:26 by tjooris           #+#    #+#             */
+/*   Updated: 2025/06/27 14:16:12 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
 
-int	is_thinking(t_philosopher *philo)
+int	check_nb_philo(t_philosopher *philo)
 {
-	if (check_simulation_stop(philo))
-		return (1);
-	print(philo);
-	usleep(200);
-	philo->status = TAKEN_FORKS;
-	if (fork_lock(philo))
-		return (1);
-	if (check_philo_died(philo))
-		return (1);
-	philo->status = EAT;
-	return (0);
+	int	i;
+
+	pthread_mutex_lock(&philo->table->status_simulation);
+	i = philo->table->num_philosophers;
+	pthread_mutex_unlock(&philo->table->status_simulation);
+	return (i);
+}
+
+void	init_value(t_table *table, int nb_philo, int eat_count)
+{
+	table->num_philosophers = nb_philo;
+	table->must_eat_count = eat_count;
+	table->have_eaten = 0;
+	table->stop_simulation = 0;
 }

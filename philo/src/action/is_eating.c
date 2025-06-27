@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:29:24 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/25 16:39:29 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 13:01:24 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	check_quotta_eaten(t_philosopher *philo)
 
 int	is_eating(t_philosopher *philo)
 {
+	philo->last_meal_time = get_current_time_ms();
 	if (check_philo_died(philo))
 		return (1);
-	print_status(philo);
-	philo->last_meal_time = get_current_time_ms();
-	philo->meals_eaten++;
+	print(philo);
 	if (!my_usleep(philo, philo->time_to_eat))
 		return (1);
+	philo->meals_eaten++;
 	check_quotta_eaten(philo);
 	let_fork(philo);
 	philo->status = SLEEP;

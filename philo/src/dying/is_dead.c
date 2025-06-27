@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:31:48 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/25 16:40:09 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 12:04:08 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	report_death(t_philosopher	*philo)
 	t_table	*table;
 
 	table = philo->table;
-	pthread_mutex_lock(&table->status_simulation);
 	philo->status = DEAD;
+	pthread_mutex_lock(&table->status_simulation);
 	if (table->stop_simulation == 0)
 		print_status(philo);
 	table->stop_simulation = 1;
@@ -30,7 +30,7 @@ int	check_philo_status(t_philosopher *philo)
 	time_t	now;
 
 	now = get_current_time_ms();
-	if (now - philo->last_meal_time >= philo->time_to_die)
+	if (now - philo->last_meal_time > philo->time_to_die)
 		return (0);
 	return (1);
 }

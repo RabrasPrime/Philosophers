@@ -6,7 +6,7 @@
 #    By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/20 14:10:16 by tjooris           #+#    #+#              #
-#    Updated: 2025/06/23 13:43:23 by tjooris          ###   ########.fr        #
+#    Updated: 2025/06/27 12:44:52 by tjooris          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC =   ft_philosophers.c \
 		clear.c \
 		init.c \
 		utils.c \
+		utils_2.c \
 
 #=-=-=-=-=-=-ACTION-=-=-=-=-=#
 
@@ -81,7 +82,7 @@ INCLUDES    =   $(INC_DIR) \
 
 CC          =   cc
 
-FLAGS       +=  -Wall -Wextra -Werror
+FLAGS       +=  -Wall -Wextra -Werror -Ofast
 PPFLAGS     +=  $(addprefix -I, $(INCLUDES)) -MMD -MP
 
 LDFLAGS     +=  $(addprefix -L, $(dir $(LIB_PATH)))

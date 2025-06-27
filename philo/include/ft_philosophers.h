@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/25 16:42:03 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:16:01 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ void		take_forks_and_eat(t_philosopher *philo);
 int			print_status(t_philosopher *philo);
 long long	get_current_time_ms(void);
 void		clear_table(t_table *table);
-t_table		*init_table(int nb_philo, int time_to_die,
-				int time_to_eat, int time_to_sleep, int eat_count);
+t_table		*init_table(int nb_philo, int eat_count);
 int			my_usleep(t_philosopher *philo, long long time);
 void		let_fork(t_philosopher *philo);
 int			is_fork_taken(t_fork *fork);
@@ -85,7 +84,6 @@ int			take_fork(t_fork *fork);
 int			check_philo_status(t_philosopher *philo);
 int			check_philo_died(t_philosopher	*philo);
 int			check_simulation_stop(t_philosopher *philo);
-int			take_forks(t_fork *left_fork, t_fork *right_fork);
 int			is_eating(t_philosopher *philo);
 int			is_sleeping(t_philosopher *philo);
 int			is_thinking(t_philosopher *philo);
@@ -93,5 +91,10 @@ int			check_arguments(int size, char **tab);
 int			is_number(char *str);
 int			ft_atoi_philo(char *number);
 int			fork_lock(t_philosopher *philo);
+int			print(t_philosopher *philo);
+int			check_nb_philo(t_philosopher *philo);
+void		init_value(t_table *table, int nb_philo, int eat_count);
+void		init_philosophers(t_table *table, int time_to_die,
+				int time_to_eat, int time_to_sleep);
 
 #endif

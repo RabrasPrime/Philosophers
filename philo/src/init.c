@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/25 15:05:54 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:15:45 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	init_philosopher(t_table *table, int id, t_philosopher *philo)
 	philo->status = THINK;
 }
 
-void	init_philosophers(t_table *table, int time_to_die, int time_to_eat, int time_to_sleep)
+void	init_philosophers(t_table *table, int time_to_die,
+			int time_to_eat, int time_to_sleep)
 {
 	int	i;
 
@@ -79,22 +80,21 @@ static int	init_mutexes(t_table *table)
 	return (1);
 }
 
-t_table	*init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_sleep, int eat_count)
+t_table	*init_table(int nb_philo, int eat_count)
 {
 	t_table	*table;
 
-	if (nb_philo < 0 || time_to_die < 0 || time_to_eat < 0 || time_to_sleep < 0 || eat_count == -1)
+	if (nb_philo < 0 || eat_count == -1)
 		return (NULL);
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
-	table->num_philosophers = nb_philo;
-	table->must_eat_count = eat_count;
-	table->have_eaten = 0;
-	table->stop_simulation = 0;
-	table->start_time = get_current_time_ms();
+	init_value(table, nb_philo, eat_count);
 	if (!init_forks(&table->forks, nb_philo) || !init_mutexes(table))
-		return (free(table), NULL);
+	{
+		free(table);
+		return (NULL);
+	}
 	table->philosophers = malloc(sizeof(t_philosopher) * nb_philo);
 	if (!table->philosophers)
 	{
@@ -104,6 +104,5 @@ t_table	*init_table(int nb_philo, int time_to_die, int time_to_eat, int time_to_
 		free(table);
 		return (NULL);
 	}
-	init_philosophers(table, time_to_die, time_to_eat, time_to_sleep);
 	return (table);
 }

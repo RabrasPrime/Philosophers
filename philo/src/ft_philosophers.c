@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/25 15:01:38 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 11:55:21 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*philosopher_routine(void *arg)
 	pthread_mutex_unlock(&philo->table->init);
 	philo->status = THINK;
 	if (philo->id % 2 == 1)
-		my_usleep(philo, philo->time_to_eat);
+		usleep((philo->time_to_eat / 2) * 1000);
 	while (!everyone_ate(philo))
 	{
 		if (check_philo_died(philo))
@@ -120,14 +120,13 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	if (argc == 6)
-		table = init_table(ft_atoi_philo(argv[1]), ft_atoi_philo(argv[2]),
-				ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]),
-				ft_atoi_philo(argv[5]));
+		table = init_table(ft_atoi_philo(argv[1]), ft_atoi_philo(argv[5]));
 	else
-		table = init_table(ft_atoi_philo(argv[1]), ft_atoi_philo(argv[2]),
-				ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]), -2);
+		table = init_table(ft_atoi_philo(argv[1]), -2);
 	if (!table)
 		return (-1);
+	init_philosophers(table, ft_atoi_philo(argv[2]),
+		ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]));
 	start_simulation(table);
 	clear_table(table);
 }
