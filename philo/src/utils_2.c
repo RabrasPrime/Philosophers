@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:58:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 14:16:12 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:39:02 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ void	init_value(t_table *table, int nb_philo, int eat_count)
 	table->must_eat_count = eat_count;
 	table->have_eaten = 0;
 	table->stop_simulation = 0;
+	table->start_time = get_current_time_ms();
 }
