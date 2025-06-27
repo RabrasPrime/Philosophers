@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:33:40 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 14:06:47 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:56:56 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	let_fork(t_philosopher *philo)
 	pthread_mutex_unlock(&second->fork);
 }
 
-int	taking_only_fork(t_philosopher *philo, t_fork *first)
+static int	taking_only_fork(t_philosopher *philo, t_fork *first)
 {
 	if (first->status == TAKEN)
 	{
@@ -60,7 +60,7 @@ int	taking_only_fork(t_philosopher *philo, t_fork *first)
 	return (1);
 }
 
-int	take_forks(t_philosopher *philo, t_fork *first, t_fork *second)
+static int	take_forks(t_philosopher *philo, t_fork *first, t_fork *second)
 {
 	int	i;
 
@@ -86,7 +86,7 @@ int	take_forks(t_philosopher *philo, t_fork *first, t_fork *second)
 	return (i);
 }
 
-int	taking_forks(t_philosopher *philo, t_fork *first, t_fork *second)
+static int	taking_forks(t_philosopher *philo, t_fork *first, t_fork *second)
 {
 	while (take_forks(philo, first, second))
 	{

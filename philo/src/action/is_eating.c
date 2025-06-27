@@ -6,13 +6,13 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:29:24 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 13:01:24 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:57:24 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
 
-void	check_quotta_eaten(t_philosopher *philo)
+static void	check_quotta_eaten(t_philosopher *philo)
 {
 	t_table	*table;
 
