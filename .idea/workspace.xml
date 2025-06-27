@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
+    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
+  </component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5f0ea253-3a7c-4e63-be75-99658096c771" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/philo/src/action/is_thinking.c" beforeDir="false" afterPath="$PROJECT_DIR$/philo/src/action/is_thinking.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/philo/src/dying/is_dead.c" beforeDir="false" afterPath="$PROJECT_DIR$/philo/src/dying/is_dead.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/philo/src/ft_philosophers.c" beforeDir="false" afterPath="$PROJECT_DIR$/philo/src/ft_philosophers.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/philo/src/utils_2.c" beforeDir="false" afterPath="$PROJECT_DIR$/philo/src/utils_2.c" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/philo/include/ft_philosophers.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/philo/src/action/is_eating.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/philo/src/action/is_sleeping.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/philo/src/action/is_thinking.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/philo/src/clear.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/philo/src/dying/is_dead.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/philo/src/fork/fork.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/philo/src/init.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/philo/src/utils.c" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2ywpdhzu2WAWVsySrs7h3U7m2BD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/tjooris/Documents/Philosophers",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "ma.leet.ft_header.AppSettingsConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f0ea253-3a7c-4e63-be75-99658096c771" name="Changes" comment="" />
+      <created>1750755582944</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1750755582944</updated>
+      <workItem from="1750755585182" duration="1220000" />
+      <workItem from="1750756930051" duration="203000" />
+      <workItem from="1750757146325" duration="168000" />
+      <workItem from="1750757328680" duration="13270000" />
+      <workItem from="1751024374591" duration="67000" />
+      <workItem from="1751024462074" duration="3480000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
