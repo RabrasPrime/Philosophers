@@ -127,7 +127,7 @@ endif
 
 #=-=-=-=-=-=-CAST-=-=-=-=-=#
 
-.PHONY: all clean fclean $(MODE) re help bonus
+.PHONY: all clean fclean $(MODE) re help bonus print-% force
 
 all: $(NAME)
 
@@ -142,17 +142,14 @@ $(BUILD_DIR)%.o: $(SRC_DIR)%.c $(LIB_PATH)
 $(LIB_PATH): force
 	@$(MAKE) -C $(@D)
 
-.PHONY: clean
 clean:
 	-for lib in $(dir $(LIB_PATH)); do $(MAKE) -s -C $$lib $@; done
 	rm -rf $(MAKE_DIR)
 
-.PHONY: fclean
 fclean:
 	-for lib in $(dir $(LIB_PATH)); do $(MAKE) -s -C $$lib $@; done
 	rm -rf $(MAKE_DIR) $(NAME) $(NAME_BONUS)
 
-.PHONY: re
 re: fclean
 	$(MAKE)
 
@@ -164,12 +161,10 @@ help:
 	@echo "  fclean    Remove all build files, binary, and mode trace"
 	@echo "  re        Clean and rebuild"
 
-.PHONY: print-%
 print-%:
 	@echo $(patsubst print-%,%,$@)=
 	@echo $($(patsubst print-%,%,$@))
 
-.PHONY: force
 force:
 
 -include $(DEPS)
