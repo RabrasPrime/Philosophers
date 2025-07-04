@@ -112,12 +112,12 @@ int	main(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 	{
 		printf("error: wrong number of argument\n");
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (!check_arguments(argc, argv))
 	{
 		printf("error: wrong type of arguments\n");
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	if (argc == 6)
 		table = init_table(ft_atoi_philo(argv[1]), ft_atoi_philo(argv[5]));
