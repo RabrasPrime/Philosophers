@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:58:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 14:39:02 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:24:21 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,17 @@ void	init_value(t_table *table, int nb_philo, int eat_count)
 	table->have_eaten = 0;
 	table->stop_simulation = 0;
 	table->start_time = get_current_time_ms();
+}
+
+int	join_philo(t_table *table, int num_philo_join)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_philo_join)
+	{
+		if (pthread_join(table->philosophers[i].thread, NULL))
+			return (0);
+		i++;
+	}
 }
