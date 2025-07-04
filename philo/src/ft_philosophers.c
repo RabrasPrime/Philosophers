@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/07/04 13:11:44 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/07/04 13:14:23 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	*philosopher_routine(void *arg)
 	if (philo->table->must_eat_count == 0)
 		return (NULL);
 	pthread_mutex_lock(&philo->table->init);
+	philo->last_meal_time = philo->table->start_time;
 	pthread_mutex_unlock(&philo->table->init);
 	philo->status = THINK;
 	if (philo->id % 2 == 1)
