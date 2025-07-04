@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:06:45 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 14:16:01 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:33:02 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int			ft_atoi_philo(char *number);
 int			fork_lock(t_philosopher *philo);
 int			print(t_philosopher *philo);
 int			check_nb_philo(t_philosopher *philo);
+int			join_philo(t_table *table, int num_philo_join);
 void		init_value(t_table *table, int nb_philo, int eat_count);
 void		init_philosophers(t_table *table, int time_to_die,
 				int time_to_eat, int time_to_sleep);

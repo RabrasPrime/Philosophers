@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjooris <tjooris@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 13:58:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/07/04 11:24:21 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:34:58 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,5 @@ int	join_philo(t_table *table, int num_philo_join)
 			return (0);
 		i++;
 	}
+	return (1);
 }

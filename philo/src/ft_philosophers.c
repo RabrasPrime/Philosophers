@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 14:38:06 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:34:27 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,16 @@ static int	start_simulation(t_table *table)
 		table->philosophers[i].last_meal_time = table->start_time;
 		if (pthread_create(&table->philosophers[i].thread,
 				NULL, philosopher_routine, &table->philosophers[i]))
-			return (0);
+		{
+			table->stop_simulation = 1;
+			break ;
+		}
 		i++;
 	}
 	table->start_time = get_current_time_ms();
 	pthread_mutex_unlock(&table->init);
 	wait_simulation_end(table);
-	i = 0;
-	while (i < table->num_philosophers)
-	{
-		if (pthread_join(table->philosophers[i].thread, NULL))
-			return (0);
-		i++;
-	}
+	join_philo(table, i);
 	return (1);
 }
 
