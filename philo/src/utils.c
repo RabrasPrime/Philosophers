@@ -6,11 +6,12 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:22:26 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 13:57:28 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/07/04 13:04:31 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philosophers.h"
+#include <limits.h>
 
 int	ft_atoi_philo(char *number)
 {
@@ -23,7 +24,7 @@ int	ft_atoi_philo(char *number)
 	{
 		nb = (nb * 10) + (number[i] - '0');
 		i++;
-		if (nb < 0)
+		if (nb < 0 || nb > INT_MAX)
 			return (-1);
 	}
 	return (nb);

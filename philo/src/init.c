@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:23:05 by tjooris           #+#    #+#             */
-/*   Updated: 2025/06/27 18:52:32 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/07/04 13:03:05 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	init_philosopher(t_table *table, int id, t_philosopher *philo)
 	philo->status = THINK;
 }
 
-void	init_philosophers(t_table *table, int time_to_die,
+int	init_philosophers(t_table *table, int time_to_die,
 			int time_to_eat, int time_to_sleep)
 {
 	int	i;
 
+	if (time_to_die == -1 || time_to_eat == -1 || time_to_sleep == -1)
+		return (0);
 	i = 0;
 	while (i < table->num_philosophers)
 	{
@@ -37,6 +39,7 @@ void	init_philosophers(t_table *table, int time_to_die,
 		table->philosophers[i].time_to_sleep = time_to_sleep;
 		i++;
 	}
+	return (1);
 }
 
 static int	init_forks(t_fork **forks, int nb_philo)

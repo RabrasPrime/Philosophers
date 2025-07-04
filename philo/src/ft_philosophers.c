@@ -6,7 +6,7 @@
 /*   By: tjooris <tjooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:07:41 by tjooris           #+#    #+#             */
-/*   Updated: 2025/07/04 12:34:27 by tjooris          ###   ########.fr       */
+/*   Updated: 2025/07/04 13:11:44 by tjooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static int	start_simulation(t_table *table)
 int	main(int argc, char **argv)
 {
 	t_table	*table;
+	int		error_philo;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -122,8 +123,9 @@ int	main(int argc, char **argv)
 		table = init_table(ft_atoi_philo(argv[1]), -2);
 	if (!table)
 		return (-1);
-	init_philosophers(table, ft_atoi_philo(argv[2]),
-		ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]));
-	start_simulation(table);
+	error_philo = init_philosophers(table, ft_atoi_philo(argv[2]),
+			ft_atoi_philo(argv[3]), ft_atoi_philo(argv[4]));
+	if (error_philo)
+		start_simulation(table);
 	clear_table(table);
 }
